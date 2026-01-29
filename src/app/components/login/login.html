@@ -1,0 +1,47 @@
+<div class="login-container">
+  <h2>{{ isRegisterMode() ? 'הרשמה למערכת' : 'התחברות למערכת' }}</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    @if (isRegisterMode()) {
+    <div>
+      <label>שם מלא:</label>
+      <input type="text" formControlName="name" placeholder="הכנס את שמך המלא">
+      @if (loginForm.get('name')?.invalid && loginForm.get('name')?.touched) {
+      <small>שם חובה</small>
+      }
+    </div>
+    }
+
+    <div>
+      <label>אימייל:</label>
+      <input type="email" formControlName="email" placeholder="your@email.com">
+      @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+      <small>אימייל לא תקין</small>
+      }
+    </div>
+
+    <div>
+      <label>סיסמה:</label>
+      <input type="password" formControlName="password" placeholder="הכנס סיסמה (לפחות 6 תווים)">
+      @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+      <small>סיסמה חייבת להכיל לפחות 6 תווים</small>
+      }
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">
+      <svg *ngIf="!isRegisterMode()" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+        <polyline points="10 17 15 12 10 7"></polyline>
+        <line x1="15" y1="12" x2="3" y2="12"></line>
+      </svg>
+      {{ isRegisterMode() ? 'הרשם עכשיו' : 'התחבר למערכת' }}
+    </button>
+  </form>
+
+  <p>
+    {{ isRegisterMode() ? 'כבר יש לך חשבון?' : 'אין לך חשבון עדיין?' }}
+    <button type="button" (click)="toggleMode()">
+      {{ isRegisterMode() ? 'התחבר' : 'הרשם עכשיו' }}
+    </button>
+  </p>
+</div>

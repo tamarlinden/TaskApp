@@ -1,0 +1,123 @@
+<div class="teams-page animate-fadeIn">
+  <h2>הצוותים שלי</h2>
+  <button (click)="toggleCreateForm()" class="btn btn-primary">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
+      <path d="M12 5v14M5 12h14"/>
+    </svg>
+    @if (!showCreateForm()) {
+      צור צוות חדש
+    } @else {
+      ביטול
+    }
+  </button>
+
+  <!-- טופס יצירת צוות -->
+  @if (showCreateForm()) {
+  <div class="create-form animate-slideDown">
+    <h3>צור צוות חדש</h3>
+    <form [formGroup]="teamForm" (ngSubmit)="createTeam()">
+      <input type="text" formControlName="name" placeholder="שם הצוות">
+      @if (teamForm.get('name')?.invalid && teamForm.get('name')?.touched) {
+        <div class="error-message">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          שם הצוות חייב להכיל לפחות 2 תווים
+        </div>
+      }
+      <button type="submit" [disabled]="teamForm.invalid">צור צוות</button>
+    </form>
+  </div>
+  }
+
+  <!-- רשימת הצוותים -->
+  <div class="teams-grid">
+    @if (teams().length === 0) {
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 15px; opacity: 0.5;">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <br>
+        אין לך צוותים עדיין. צור צוות חדש כדי להתחיל.
+      </p>
+    } @else {
+      @for (team of teams(); track team.id) {
+        <div class="team-card animate-slideUp">
+          <h3>{{ team.name }}</h3>
+          <div class="member-count">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            {{ team.members_count }} חברים
+          </div>
+          
+          <!-- טופס הוספת חבר לצוות -->
+          @if (showAddMemberForm() === team.id) {
+            <div class="add-member-form animate-fadeIn">
+              <form [formGroup]="memberForm" (ngSubmit)="addMember(team.id)">
+                <label for="userId">בחר משתמש להוספה:</label>
+                <select id="userId" formControlName="userId">
+                  <option value="">בחר משתמש</option>
+                  @for (user of users(); track user.id) {
+                    <option [value]="user.id">{{ user.name }} ({{ user.email }})</option>
+                  }
+                </select>
+                @if (memberForm.get('userId')?.invalid && memberForm.get('userId')?.touched) {
+                  <div class="error-message">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="8" x2="12" y2="12"></line>
+                      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    יש לבחור משתמש
+                  </div>
+                }
+                
+                <label for="role">תפקיד:</label>
+                <select id="role" formControlName="role">
+                  <option value="member">חבר</option>
+                  <option value="admin">מנהל</option>
+                </select>
+                <div class="form-actions">
+                  <button type="submit" [disabled]="memberForm.invalid">הוסף</button>
+                  <button type="button" (click)="toggleAddMemberForm(null)">ביטול</button>
+                </div>
+              </form>
+            </div>
+          }
+          
+          <div class="team-actions">
+            <button class="primary-btn" (click)="goToProjects(team.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+              צפה בפרויקטים
+            </button>
+            <button class="secondary-btn" (click)="toggleAddMemberForm(team.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="8.5" cy="7" r="4"></circle>
+                <line x1="20" y1="8" x2="20" y2="14"></line>
+                <line x1="23" y1="11" x2="17" y2="11"></line>
+              </svg>
+              @if (showAddMemberForm() !== team.id) {
+                הוסף חבר צוות
+              } @else {
+                ביטול
+              }
+            </button>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>
