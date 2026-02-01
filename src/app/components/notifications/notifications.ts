@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NotificationService } from '../../services/notification';
 import { Notification } from '../../models/task.model';
 import { Router } from '@angular/router';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-notifications',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 export class Notifications implements OnInit, OnDestroy {
   private notificationService = inject(NotificationService);
   private router = inject(Router);
+  private authService = inject(Auth);
 
   notifications = signal<Notification[]>([]);
   unreadCount = signal(0);
@@ -21,9 +23,12 @@ export class Notifications implements OnInit, OnDestroy {
   showPanel = signal(false);
 
   ngOnInit() {
-    this.loadNotifications();
-    // התחל polling כל 10 שניות לעדכון notifications
-    this.notificationService.startPolling();
+    // טען notifications רק אם המשתמש התחבר
+    if (this.authService.isLoggedIn()) {
+      this.loadNotifications();
+      // התחל polling כל 10 שניות לעדכון notifications
+      this.notificationService.startPolling();
+    }
   }
 
   ngOnDestroy() {
