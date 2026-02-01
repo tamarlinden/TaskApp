@@ -85,12 +85,30 @@
 
     <div class="add-comment-area">
       <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="chat-input-form">
-        <input 
-          type="text" 
-          #commentInput
-          formControlName="content" 
-          placeholder="כתוב הודעה..."
-        >
+        <div class="input-wrapper">
+          <input 
+            type="text" 
+            #commentInput
+            formControlName="content" 
+            placeholder="Type @ to mention someone..."
+            (input)="onCommentInputChange($event)"
+          >
+          
+          @if (isMentioning() && mentionSuggestions().length > 0) {
+            <div class="mention-suggestions">
+              @for (member of mentionSuggestions(); track member.id) {
+                <button 
+                  type="button"
+                  class="mention-option"
+                  (click)="selectMention(member)"
+                >
+                  <span class="mention-name">@{{ member.name }}</span>
+                  <span class="mention-email">{{ member.email }}</span>
+                </button>
+              }
+            </div>
+          }
+        </div>
         <button type="submit" [disabled]="commentForm.invalid || !commentForm.value.content?.trim()">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="22" y1="2" x2="11" y2="13"></line>

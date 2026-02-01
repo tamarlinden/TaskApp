@@ -10,12 +10,14 @@
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
-        <span>מחובר כ: {{ currentUser()?.name }}</span>
+        <span>{{ currentUser()?.name }}</span>
       </div>
     }
 
     <nav>
       <a routerLink="/teams" routerLinkActive="active">צוותים</a>
+      
+      <app-notifications></app-notifications>
       
       <button class="logout-btn" (click)="logout()">
         <span>התנתק</span>

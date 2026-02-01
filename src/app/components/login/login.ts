@@ -19,7 +19,7 @@ export class Login {
   isRegisterMode = signal(false);
   isLoading = signal(false);
   errorMessage = signal<string | null>(null);
-  showPassword = false;
+  showPassword = true;
   submitted = false;
 
   loginForm = this.fb.group({

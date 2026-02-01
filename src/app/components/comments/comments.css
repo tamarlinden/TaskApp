@@ -61,50 +61,71 @@
 .comment-row {
   display: flex;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /* הודעה שלי תהיה בצד ימין של המכולת */
 .comment-row.my-comment {
   justify-content: flex-end;
+  margin-right: 0 !important;
+  margin-left: auto;
+  padding-right: 0;
 }
 
 /* הודעה של אחרים תהיה בצד שמאל של המכולת */
 .comment-row:not(.my-comment) {
   justify-content: flex-start;
+  margin-left: var(--space-4);
+  margin-right: auto;
 }
 
 .comment-unit {
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
-  max-width: 85%;
+  max-width: 75%;
+}
+
+.comment-row.my-comment .comment-unit {
+  max-width: 65%;
 }
 
 .comment-bubble {
   max-width: 90%;
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
+  padding: 12px 16px;
+  border-radius: 18px;
   position: relative;
-  box-shadow: var(--shadow-sm);
   font-size: var(--text-sm);
-  line-height: var(--leading-normal);
+  line-height: 1.5;
   background: var(--white);
   color: var(--text-primary);
-  border: 1px solid var(--border-light);
-  /* כאן הקסם: הטקסט בפנים תמיד יהיה בעברית נכונה */
+  border: none;
   direction: rtl;
   text-align: right;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+
+.comment-bubble:hover {
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 }
 
 .comment-row:not(.my-comment) .comment-bubble {
-  border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg);
+  background: #f3f3f3;
+  border-radius: 4px 18px 18px 18px;
 }
 
 .comment-row.my-comment .comment-bubble {
-  background: var(--primary);
-  color: var(--text-inverted);
-  border-color: transparent;
-  border-radius: var(--radius-lg) 0 var(--radius-lg) var(--radius-lg);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
+  box-shadow: 0 2px 8px 0 rgba(20, 184, 166, 0.15);
+  border-radius: 18px 4px 18px 18px;
+}
+
+.comment-row.my-comment .comment-bubble:hover {
+  box-shadow: 0 4px 12px 0 rgba(20, 184, 166, 0.25);
+  transform: translateY(-1px);
 }
 
 /* זנב הבועה עבור אחרים */
@@ -112,9 +133,23 @@
   content: '';
   position: absolute;
   top: 0;
-  left: -8px;
-  border-top: 8px solid var(--white);
+  left: -6px;
+  width: 0;
+  height: 0;
+  border-top: 6px solid #f3f3f3;
   border-right: 8px solid transparent;
+}
+
+/* זנב הבועה עבורי */
+.comment-row.my-comment .comment-bubble::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -6px;
+  width: 0;
+  height: 0;
+  border-top: 6px solid var(--primary-dark);
+  border-left: 8px solid transparent;
 }
 
 /* זנב הבועה עבורי */
@@ -133,31 +168,39 @@
   color: var(--text-secondary);
   white-space: nowrap;
   margin-top: 4px;
+  display: none; /* הסתר את שם המשתמש */
 }
 
 .comment-row.my-comment .comment-author {
-  color: var(--primary-dark);
+  display: none;
 }
 
 .comment-content {
   word-wrap: break-word;
   white-space: pre-wrap;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0;
+  line-height: 1.45;
 }
 
 .comment-time {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-tertiary);
-  margin-top: var(--space-1);
+  margin-top: 4px;
   display: block;
+  font-weight: 400;
+  letter-spacing: 0.2px;
 }
 
 .comment-row.my-comment .comment-time {
   color: rgba(255, 255, 255, 0.8);
-  text-align: left;
 }
 
 .add-comment-area {
   margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-light);
 }
 
 .chat-input-form {
@@ -166,48 +209,111 @@
   align-items: center;
   gap: var(--space-2);
   background: var(--white);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-full);
-  padding: 6px 16px;
-  transition: all var(--transition-normal);
+  border: 2px solid #e5e5e5;
+  border-radius: 24px;
+  padding: 8px 16px;
+  transition: all 0.3s ease;
   direction: rtl;
-  /* שדה הקלט פועל בעברית */
 }
 
 .chat-input-form:focus-within {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.08);
 }
 
 .chat-input-form input {
   flex: 1;
   border: none;
   padding: 8px 0;
-  font-size: var(--text-sm);
+  font-size: 14px;
   background: transparent;
   outline: none;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.chat-input-form input::placeholder {
+  color: var(--text-tertiary);
+  font-weight: 400;
 }
 
 .chat-input-form button {
-  background: var(--primary);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: white;
   border: none;
-  width: 35px;
-  height: 35px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px 0 rgba(20, 184, 166, 0.2);
 }
 
 .chat-input-form button:hover:not(:disabled) {
-  background: var(--primary-dark);
-  transform: scale(1.1);
+  background: linear-gradient(135deg, var(--primary-dark) 0%, #0e9488 100%);
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px 0 rgba(20, 184, 166, 0.25);
+}
+
+.chat-input-form button:active:not(:disabled) {
+  transform: scale(0.95);
 }
 
 .chat-input-form button:disabled {
-  background: var(--gray-300);
+  background: #d0d0d0;
   cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Mention Suggestions Styling */
+.input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.mention-suggestions {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  margin-bottom: 8px;
+}
+
+.mention-option {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: none;
+  background: transparent;
+  text-align: right;
+  cursor: pointer;
+  transition: all 0.2s;
+  gap: var(--space-1);
+}
+
+.mention-option:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.mention-option .mention-name {
+  font-weight: 500;
+  color: var(--primary);
+  font-size: var(--text-sm);
+}
+
+.mention-option .mention-email {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
 }

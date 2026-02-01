@@ -82,3 +82,18 @@ export interface User {
   email: string;
   role?: string;
 }
+
+export interface Notification {
+  id: string;
+  user_id: string;
+  type: 'comment' | 'mention' | 'assignment' | 'task_update';
+  title: string;
+  message: string;
+  task_id?: string;
+  comment_id?: string;
+  from_user_id?: string;
+  from_user_name?: string;
+  is_read: boolean;
+  created_at: string;
+  action_url?: string;
+}

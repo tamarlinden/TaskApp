@@ -26,10 +26,11 @@
   color: var(--text-primary);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background: linear-gradient(135deg, #1ee0e0 0%, #19c7c7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: -0.5px;
 }
 
 .form-group {
@@ -47,21 +48,21 @@
 .login-container input {
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  border: 2px solid transparent;
+  border: 1.5px solid #e0e7f0;
   border-radius: var(--radius-md);
   box-sizing: border-box;
   font-size: 16px;
   background: var(--bg-secondary);
   color: var(--text-primary);
-  transition: border var(--transition-normal) var(--transition-ease), box-shadow var(--transition-normal) var(--transition-ease);
+  transition: border var(--transition-normal) var(--transition-ease), box-shadow var(--transition-normal) var(--transition-ease), background 0.15s;
   outline: none;
   font-family: inherit;
 }
 
 .login-container input:focus {
-  border: 2px solid var(--primary);
+  border: 1.5px solid #1ee0e0;
   background: #fff;
-  box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.10);
+  box-shadow: 0 0 0 3px rgba(30, 224, 224, 0.10);
 }
 
 .password-row {
@@ -97,34 +98,41 @@
 button[type="submit"], .login-btn {
   width: 100%;
   padding: var(--space-4) 0;
-  background: #19c7c7;
+  background: linear-gradient(135deg, #1ee0e0 0%, #19c7c7 100%);
   color: #fff;
   border: none;
   border-radius: var(--radius-lg);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
-  box-shadow: 0 2px 8px 0 rgba(20, 184, 166, 0.10);
+  box-shadow: 0 4px 16px 0 rgba(30, 224, 224, 0.2);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transition: background 0.18s, box-shadow 0.18s;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
 }
 button[type="submit"]:hover, .login-btn:hover {
-  background: #13b1b1;
-  box-shadow: 0 4px 16px 0 rgba(20, 184, 166, 0.13);
+  background: linear-gradient(135deg, #19c7c7 0%, #13b1b1 100%);
+  box-shadow: 0 8px 24px 0 rgba(30, 224, 224, 0.25);
+  transform: translateY(-2px);
+}
+button[type="submit"]:active, .login-btn:active {
+  transform: translateY(0);
 }
 button[type="submit"]:disabled, .login-btn:disabled {
-  background: #b2eaea;
+  background: #d0f0f0;
   color: #fff;
   cursor: not-allowed;
   box-shadow: none;
+  transform: none;
 }
 .login-btn svg {
   margin-right: 0;
   margin-left: 0;
   vertical-align: middle;
+  width: 18px;
+  height: 18px;
 }
 
 button[type="submit"].loading {
