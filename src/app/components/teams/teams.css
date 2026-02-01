@@ -32,6 +32,10 @@
   transition: all var(--transition-normal) var(--transition-ease);
 }
 
+.teams-page > button svg {
+  margin-left: 8px;
+}
+
 .teams-page > button:hover {
   transform: scale(1.05);
   box-shadow: var(--shadow-lg);
@@ -109,6 +113,10 @@
   margin-top: 6px;
 }
 
+.error-message svg {
+  margin-left: 5px;
+}
+
 .teams-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -151,6 +159,10 @@
   padding: 4px 12px;
   border-radius: 12px;
   align-self: center;
+}
+
+.team-card .member-count svg {
+  margin-left: 5px;
 }
 
 .add-member-form {
@@ -230,6 +242,10 @@
   transition: all var(--transition-normal) var(--transition-ease);
 }
 
+.team-actions button svg {
+  margin-left: 8px;
+}
+
 .primary-btn {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   color: white;
@@ -256,6 +272,11 @@
   color: var(--text-secondary);
   padding: 40px;
   font-size: 16px;
+}
+
+.teams-grid p svg {
+  margin-bottom: 15px;
+  opacity: 0.5;
 }
 
 /* Responsive adjustments */

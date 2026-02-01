@@ -1,59 +1,84 @@
-# TasksApp
+# TaskFlow (Angular 20)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.6.
+TaskFlow is a Team Tasks Management App built with Angular 20. It supports full workflow for login/register, teams, projects, tasks, and comments, with a clean turquoise/green UI and RTL/LTR awareness.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- Authentication (login/register) with JWT storage in localStorage.
+- Teams → Projects → Tasks workflow.
+- Task board with drag-and-drop (Angular CDK).
+- Comments per task with auto-scroll and focus behavior.
+- Automatic 401 handling via HTTP interceptor (logs out and redirects).
+- RTL-first UI with LTR overrides for English inputs and labels.
 
-```bash
-ng serve
-```
+## Tech Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Angular 20 (standalone components + control flow `@if`/`@for`)
+- RxJS
+- Angular CDK Drag & Drop
 
-## Code scaffolding
+## Getting Started
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Prerequisites
 
-```bash
-ng generate component component-name
-```
+- Node.js 18+ (recommended)
+- npm
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+### Install
 
 ```bash
-ng build
+npm install
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Run (Development)
 
 ```bash
-ng test
+npm start
 ```
 
-## Running end-to-end tests
+Open the app at `http://localhost:4200/` (Angular will prompt if a different port is needed).
 
-For end-to-end (e2e) testing, run:
+## API Configuration
 
-```bash
-ng e2e
+The frontend expects the backend API at:
+
+```
+http://localhost:3000/api
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+You can change this in:
 
-## Additional Resources
+```
+src/environments/environment.ts
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Auth Endpoints (expected)
+
+- `POST /auth/login`
+- `POST /auth/register`
+
+Additional endpoints are used for teams, projects, tasks, and comments through the services layer in `src/app/services`.
+
+## Scripts
+
+- `npm start` — run dev server
+- `npm run build` — production build
+- `npm run watch` — build in watch mode
+- `npm run test` — unit tests
+
+## Project Structure
+
+```
+src/app/
+  components/   # login, teams, projects, tasks, comments
+  services/     # API services
+  guards/       # auth guard
+  interceptors/ # JWT + 401 handling
+  models/       # data models
+```
+
+## UI Notes
+
+- RTL layout by default; LTR classes (`ltr-text`, `ltr-input`) applied where English appears.
+- Component styles are in `.css` files only (no inline styles or TS-embedded styles).
+

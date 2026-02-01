@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './teams.html',
-  styleUrl: './teams.css',
+  styleUrls: ['./teams.css'],
 })
 export class Teams implements OnInit {
   private teamService = inject(TeamService);

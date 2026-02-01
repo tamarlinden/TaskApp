@@ -14,7 +14,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList }
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, Comments, CdkDrag, CdkDropList],
   templateUrl: './tasks.html',
-  styleUrl: './tasks.css',
+  styleUrls: ['./tasks.css'],
 })
 export class Tasks implements OnInit {
   private route = inject(ActivatedRoute);
