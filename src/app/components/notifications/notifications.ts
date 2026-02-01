@@ -26,7 +26,6 @@ export class Notifications implements OnInit, OnDestroy {
     // טען notifications רק אם המשתמש התחבר
     if (this.authService.isLoggedIn()) {
       this.loadNotifications();
-      // התחל polling כל 10 שניות לעדכון notifications
       this.notificationService.startPolling();
     }
   }
